@@ -31,12 +31,12 @@ string toString(int numero) {
 //PUBLIC
 Menu::Menu(){
 	ejecutar();
-  
+
 
 }
 
 Menu::~Menu(){
-	
+
 }
 
 /// PRIVATE
@@ -50,73 +50,73 @@ void Menu::Leer_Alum_txt(){
 	int numSolicitudes,numTitulacion,numTitulacionSolicitud;
 	bool encontrado;
 
-	  fSolicitudes.open ("estudiantes.txt");
-	  fTitulaciones.open("titulaciones.txt");
+	fSolicitudes.open ("estudiantes.txt");
+	fTitulaciones.open("titulaciones.txt");
 
 
-	  if(fSolicitudes.is_open()){
-	   	while(!fSolicitudes.eof()){
-	   		getline(fSolicitudes,apel1,'#');
-		    getline(fSolicitudes,apel2,'#');
-		    getline(fSolicitudes,nombre,'#');
-		    getline(fSolicitudes,dni,'#');
-		    getline(fSolicitudes,notaAux,'#');
-		    getline(fSolicitudes,solicitudesAux);
+	if(fSolicitudes.is_open()){
+		while(!fSolicitudes.eof()){
+			getline(fSolicitudes,apel1,'#');
+			getline(fSolicitudes,apel2,'#');
+			getline(fSolicitudes,nombre,'#');
+			getline(fSolicitudes,dni,'#');
+			getline(fSolicitudes,notaAux,'#');
+			getline(fSolicitudes,solicitudesAux);
 
 
-		    cout << endl;
-		    cout << "-------------------------------------"<< endl;
-		    cout << "Nombre: " << nombre<<endl;
-	    	cout << "Apellidos: "<<apel1 << " " << apel2 << endl;
-	    	cout << "DNI: " << dni << endl;
-	    	cout << "Nota de corte: " << notaAux << endl;
-	    	cout << "Titulaciones solicitadas: ";
+			cout << endl;
+			cout << "-------------------------------------"<< endl;
+			cout << "Nombre: " << nombre<<endl;
+			cout << "Apellidos: "<<apel1 << " " << apel2 << endl;
+			cout << "DNI: " << dni << endl;
+			cout << "Nota de corte: " << notaAux << endl;
+			cout << "Titulaciones solicitadas: ";
 
-	    	numSolicitudes = atof(solicitudesAux.c_str());
-
-
-
-	    	while(numSolicitudes>0){
-
-	    		getline(fSolicitudes,numeroSolicitud);
-
-	    		numTitulacionSolicitud = atoi(numeroSolicitud.c_str());
-
-	    		encontrado = false;
-
-	    		fTitulaciones.seekg(0,ios::beg);
-	    		//if(!fTitulaciones.fail()){ TODO Preguntar si lo tienes que poner
-					while(!encontrado&&!fTitulaciones.eof()){
-
-						getline(fTitulaciones,numeroTitulacion,'#');
-						getline(fTitulaciones,titulacion,'#');
-						getline(fTitulaciones,numeroPlazas);
-						numTitulacion = atoi(numeroTitulacion.c_str());
+			numSolicitudes = atof(solicitudesAux.c_str());
 
 
-						if(numTitulacion == numTitulacionSolicitud){
 
-							cout << titulacion << endl;
-							encontrado = true;
-					//}
+			while(numSolicitudes>0){
 
-	    		}
-	    		numSolicitudes--;
-	    	}
+				getline(fSolicitudes,numeroSolicitud);
+
+				numTitulacionSolicitud = atoi(numeroSolicitud.c_str());
+
+				encontrado = false;
+
+				fTitulaciones.seekg(0,ios::beg);
+				//if(!fTitulaciones.fail()){ TODO Preguntar si lo tienes que poner
+				while(!encontrado&&!fTitulaciones.eof()){
+
+					getline(fTitulaciones,numeroTitulacion,'#');
+					getline(fTitulaciones,titulacion,'#');
+					getline(fTitulaciones,numeroPlazas);
+					numTitulacion = atoi(numeroTitulacion.c_str());
 
 
-			    }
+					if(numTitulacion == numTitulacionSolicitud){
 
+						cout << titulacion << endl;
+						encontrado = true;
+						//}
+
+					}
+					numSolicitudes--;
+				}
+
+
+			}
+
+		}
+		fTitulaciones.close();
+		fSolicitudes.close();
 	}
-	  fTitulaciones.close();
-	  fSolicitudes.close();
-}
 }
 
 void Menu::cargarEstudiantes(){
 	universidad.cargarEstudiantesEnTitulaciones();
 }
- 
+
 void Menu::mostrarTitulacion(){
 	string seleccion;
 
@@ -146,13 +146,14 @@ void Menu::mostrarEstudiante(){
 
 void Menu::cargaDeArboles(){ //TODO CAMBIADO
 
+	cout << "cargando árboles"<< endl;
 	universidad.cargaDeArboles();
-
+	universidad.procesoMatricula();
 
 }
 
 void Menu::procMatricula(){
-	universidad.procesoMatricula();
+
 }
 
 void Menu::notascorte(){
@@ -166,10 +167,10 @@ void Menu::consultartitulacion(){
 }
 
 void Menu::mostrarSimilares(){
-string raiz;
-cout<< "Escriba la raiz:"<< endl;
-cin >> raiz;
-cout << endl;
+	string raiz;
+	cout<< "Escriba la raiz:"<< endl;
+	cin >> raiz;
+	cout << endl;
 
 	universidad.mostrarEstudiantesSimilares(raiz);
 }
@@ -190,31 +191,25 @@ void Menu::ejecutar() {
 		case 1:
 			cargarEstudiantes();
 			break;
-			
+
 		case 2:
 			mostrarTitulacion();
 			break;
 
 		case 3:
-		    mostrarEstudiante();
+			mostrarEstudiante();
 			break;
 		case 4:
 			cargaDeArboles();
+			procMatricula();
 			break;	
 		case 5:
-			procMatricula();
-
-			break;
-		case 6:
-			consultartitulacion();
-			break;
-		case 7:
 			mostrarSimilares();
 			break;
-		case 8:
+		case 6:
 			notascorte();
 			break;
-		case 0:
+		case 7:
 			salir=true;
 			break;
 
@@ -232,22 +227,22 @@ int Menu::menuPrincipal(){
 	int opcion;
 
 
-		cout << endl;
-		cout << "__________________ MENU PRINCIPAL ________________" << endl << endl;
-		cout << "   FASE 2"<<endl;
-		cout << "   1. Asignación de estudiantes"<< endl;
-		cout << "   2. Mostrar los alumnos de una titulación" << endl;
-		cout << "   3. Mostrar un estudiante" <<endl;
-		cout <<endl;
-		cout << "   FASE 3"<<endl;
-		cout << "   4. Carga de estudiantes en Arboles"<< endl;
-		cout << "   5. Buscar alumnos que comienzan por: "<<endl;
-		cout << "   6. Nota de corte de una titulación"<< endl;
-		cout << "   7. Finalizar"<<endl;
-		cout << "   0. SALIR."<< endl << endl;
-		cout << "Opcion elegida:  ";cin>> opcion;
-		cout<<"----------------------------------------------------------------------"<<endl;
-		cin.ignore();
+	cout << endl;
+	cout << "__________________ MENU PRINCIPAL ________________" << endl << endl;
+	cout << "   FASE 2"<<endl;
+	cout << "   1. Asignación de estudiantes"<< endl;
+	cout << "   2. Mostrar los alumnos de una titulación" << endl;
+	cout << "   3. Mostrar un estudiante" <<endl;
+	cout <<endl;
+	cout << "   FASE 3"<<endl;
+	cout << "   4. Carga de estudiantes en Arboles"<< endl;
+	cout << "   5. Buscar alumnos que comienzan por: "<<endl;
+	cout << "   6. Nota de corte de una titulación"<< endl;
+	cout << "   7. Finalizar"<<endl;
+	cout << "   0. SALIR."<< endl << endl;
+	cout << "Opcion elegida:  ";cin>> opcion;
+	cout<<"----------------------------------------------------------------------"<<endl;
+	cin.ignore();
 
 
 
