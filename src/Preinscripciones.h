@@ -34,7 +34,7 @@ public:
 	void cargarEstudiantes(string archivo);
 
 	/*
-		 *Pre: Alumnos cargados en las listas
+		 *Pre:  Estudiantes cargados en la lista de preinscripciones
 		 *Post: saca un estudiante de las preinscripciones y después lo borra
 		 *Complejidad:O(1)
 		 *Parámetros: *&e (Estudiante)

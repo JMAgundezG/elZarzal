@@ -31,7 +31,7 @@ bool conjuntoEstudiantes::buscar (string DNI, Estudiante *&e) {
 
 	estudiantes ->moverInicio();
 
-	while(!estudiantes->finLista()){
+	while(!estudiantes->finLista()&&!encontrado){
 
 		estudiantes->consultar(s);
 		ID = s->getDNI();
@@ -39,7 +39,7 @@ bool conjuntoEstudiantes::buscar (string DNI, Estudiante *&e) {
 		if(ID.find(DNI) == 0){
 			e = s;
 			encontrado = true;
-			}
+		}
 
 		estudiantes->avanzar();
 	}
@@ -55,18 +55,18 @@ void conjuntoEstudiantes::borrar (string DNI) {
 
 	estudiantes ->moverInicio();
 
-		while(!estudiantes->finLista()){
+	while(!estudiantes->finLista()){
 
-			estudiantes->consultar(s);
-			dni1 = s->getDNI();
+		estudiantes->consultar(s);
+		dni1 = s->getDNI();
 
-			if(DNI.find(dni1) == 0){
-				estudiantes->borrar();
+		if(DNI.find(dni1) == 0){
+			estudiantes->borrar();
 
-				}
-
-			estudiantes->avanzar();
 		}
+
+		estudiantes->avanzar();
+	}
 
 }
 
@@ -93,7 +93,7 @@ void conjuntoEstudiantes::insertarOrdenNota (Estudiante *nuevoEstudiante) {
 			estudiantes->insertar(nuevoEstudiante);
 		}
 
-    }
+	}
 	else{
 		estudiantes->insertar(nuevoEstudiante);
 	}
@@ -121,8 +121,7 @@ void conjuntoEstudiantes::obtenerEstudianteMenorNota(Estudiante *&e){
 }
 
 void conjuntoEstudiantes::mostrarEstudiantes(){
-
-	Estudiante *e = new Estudiante;
+	Estudiante *e ;
 	estudiantes->moverInicio();
 	while(!estudiantes->finLista()){
 		estudiantes->consultar(e);
@@ -131,10 +130,10 @@ void conjuntoEstudiantes::mostrarEstudiantes(){
 
 	}
 
-	delete e;
+
 }
 
-void conjuntoEstudiantes::cargaDeArboles(){ // TODO CAMBIADO
+void conjuntoEstudiantes::cargaDeArboles(){
 	estudiantes->moverInicio();
 	Estudiante *e;
 	while(!estudiantes->finLista()){
@@ -190,18 +189,18 @@ void conjuntoEstudiantes::filtroInOrden(Arbol<Estudiante *, ComparaPtrEstudiante
 
 	if (!abbu->vacio()) {
 		aux = abbu->hijoIzq();
-				if (aux != NULL) {
-					filtroInOrden(aux,apel);
+		if (aux != NULL) {
+			filtroInOrden(aux,apel);
 
-				}
-				if(abbu->raiz()->getApe1().find(apel)==0){
-				abbu->raiz()->mostrar();
-				}
+		}
+		if(abbu->raiz()->getApe1().find(apel)==0){
+			abbu->raiz()->mostrar();
+		}
 
-				aux = abbu->hijoDer();
-				if (aux != NULL) {
-					filtroInOrden(aux,apel);
-				}
+		aux = abbu->hijoDer();
+		if (aux != NULL) {
+			filtroInOrden(aux,apel);
+		}
 
 
 	}
@@ -217,8 +216,6 @@ void conjuntoEstudiantes::mostrarSimilares(const string &apel) {
 		if (abb != NULL) {
 			cout << "Mostrando similares a: " << apel << endl;
 			filtroInOrden(abb, apel);
-		} else {
-			cout << "Nadie que empiece por: " << apel << endl;
 		}
 	}
 }
@@ -255,11 +252,71 @@ Arbol<Estudiante *, ComparaPtrEstudiante> * conjuntoEstudiantes::similares(Arbol
 	return aux;
 }
 
+bool conjuntoEstudiantes::buscarEstudianteArbol(Arbol<Estudiante *, ComparaPtrEstudiante> *abbu, Estudiante *&e,string apellido1, string apellido2, string nombre){
+
+	bool encontrado = false;
+	Arbol<Estudiante *, ComparaPtrEstudiante> *aux;
+
+	if (!abbu->vacio()) {
+		if(comparadorDeEstudiantes(abbu->raiz(),apellido1,apellido2,nombre) == -1){
+			aux = abbu->hijoIzq();
+			if(aux!=NULL){
+				encontrado = buscarEstudianteArbol(aux,e,apellido1,apellido2,nombre);
+			}
+		}
+		if(comparadorDeEstudiantes(abbu->raiz(),apellido1,apellido2,nombre) == 0){
+			e = abbu->raiz();
+			encontrado = true;
+		}
+		if(comparadorDeEstudiantes(abbu->raiz(),apellido1,apellido2,nombre) == 1){
+			aux = abbu->hijoDer();
+			if(aux!=NULL){
+				encontrado = buscarEstudianteArbol(aux,e,apellido1,apellido2,nombre);
+			}
+		}
+
+	}
+	return encontrado;
+}
+
+int conjuntoEstudiantes::comparadorDeEstudiantes(Estudiante *e, string apellido1, string apellido2, string nombre){
+	int valor = 1;
+
+	if(e->getApe1()>apellido1){
+		valor = -1;
+	}
+	if(e->getApe1()==apellido1){
+		if(e->getApe2()>apellido2){
+			valor = -1;
+		}
+		if(e->getApe2()==apellido2){
+			if(e->getNombre()>nombre){
+				valor = -1;
+			}
+			if(e->getNombre()==nombre){
+				valor = 0;
+			}
+		}
+	}
+
+	return valor;
+}
+
+bool conjuntoEstudiantes::buscarEstudianteEnArbol(Estudiante *&e, string apellido1, string apellido2, string nombre){
+	bool encontrado;
+
+	encontrado = buscarEstudianteArbol(arbolEstudiantes, e, apellido1, apellido2, nombre);
+
+	return encontrado;
+}
 conjuntoEstudiantes::~conjuntoEstudiantes() {
 	estudiantes->moverInicio();
 	while(!estudiantes->finLista()){
+		Estudiante *e;
+		estudiantes->consultar(e);
 		estudiantes->borrar();
+		delete e;
+
 	}
 
 }
-

@@ -131,6 +131,132 @@ void pr_buscarEstudiante(){
 	}
 }
 
+void pr_buscarMat(){
+	titulacion *t = new titulacion("02", "ejemplo", 3);
+	Estudiante *e1 = new Estudiante("ape1", "ape2", "nombre", "76044", 5);
+	Estudiante *e2 = new Estudiante("ape1Ej", "ape2Ej", "nombreEj", "76045", 3);
+	Estudiante *e3 = new Estudiante("ape1Ej2", "ape2Ej2", "nombreEj2", "76046", 7);
+	Estudiante *e4 = new Estudiante("ape1Ej3", "ape2E3", "nombreE3", "76047", 9);
+	Estudiante *e5 = new Estudiante("ape1Ej4", "ape2Ej4", "nombreEj4", "76048", 2);
+	t->insertarEstudianteAdmitido(e1);
+	t->insertarEstudianteAdmitido(e4);
+	t->insertarEstudianteAdmitido(e3);
+	t->insertarEstudianteEnEspera(e2);
+	t->insertarEstudianteEnEspera(e5);
+	t->cargaDeArboles();
+
+	if(!t->buscarMat(e1)){
+		cout<<"Error en pruebas de buscarMat, titulacion"<<endl;
+	}
+	if(t->buscarMat(e5)){
+		cout<<"Error en pruebas de buscarMat, titulacion"<<endl;
+	}
+}
+
+void pr_borrarEstudianteMatt(){
+	titulacion *t = new titulacion("02", "ejemplo", 3);
+	Estudiante *e1 = new Estudiante("ape1", "ape2", "nombre", "76044", 5);
+	Estudiante *e2 = new Estudiante("ape1Ej", "ape2Ej", "nombreEj", "76045", 3);
+	Estudiante *e3 = new Estudiante("ape1Ej2", "ape2Ej2", "nombreEj2", "76046", 7);
+	Estudiante *e4 = new Estudiante("ape1Ej3", "ape2E3", "nombreE3", "76047", 9);
+	Estudiante *e5 = new Estudiante("ape1Ej4", "ape2Ej4", "nombreEj4", "76048", 2);
+	t->insertarEstudianteAdmitido(e1);
+	t->insertarEstudianteAdmitido(e4);
+	t->insertarEstudianteAdmitido(e3);
+	t->insertarEstudianteEnEspera(e2);
+	t->insertarEstudianteEnEspera(e5);
+	t->cargaDeArboles();
+	t->borrarEstudianteMat(e1, "02");
+	t->borrarEstudianteMat(e4, "01");
+	t->borrarEstudianteMat(e2, "03");
+	if(t->buscarMat(e1)){
+		cout<<"Error en pruebas de borrarEstudianteMat, titulacion"<<endl;
+	}
+	if(!t->buscarMat(e4)){
+		cout<<"Error en pruebas de borrarEstudianteMat, titulacion"<<endl;
+	}
+}
+
+void pr_obtenerEnEsperaMayorNota(){
+	titulacion *t = new titulacion("02", "ejemplo", 3);
+	Estudiante *e = new Estudiante();
+	Estudiante *e1 = new Estudiante("ape1", "ape2", "nombre", "76044", 5);
+	Estudiante *e2 = new Estudiante("ape1Ej", "ape2Ej", "nombreEj", "76045", 3);
+	Estudiante *e3 = new Estudiante("ape1Ej2", "ape2Ej2", "nombreEj2", "76046", 7);
+	t->insertarEstudianteEnEspera(e1);
+	t->insertarEstudianteEnEspera(e2);
+	t->insertarEstudianteEnEspera(e3);
+	t->obtenerEnEsperaMayorNota(e);
+	if(!(e==e3)){
+		cout<<"Error en pruebas de obtenerEnEsperaMayorNota, titulacion"<<endl;
+	}
+}
+
+void pr_mostrarTitulacionMat(){
+	titulacion *t = new titulacion("02", "ejemplo", 3);
+	Estudiante *e1 = new Estudiante("ape1", "ape2", "nombre", "76044", 5);
+	Estudiante *e2 = new Estudiante("ape1Ej", "ape2Ej", "nombreEj", "76045", 3);
+	Estudiante *e3 = new Estudiante("ape1Ej2", "ape2Ej2", "nombreEj2", "76046", 7);
+	Estudiante *e4 = new Estudiante("ape1Ej3", "ape2E3", "nombreE3", "76047", 9);
+	Estudiante *e5 = new Estudiante("ape1Ej4", "ape2Ej4", "nombreEj4", "76048", 2);
+	t->insertarEnArbol(e1);
+	t->insertarEnArbol(e2);
+	t->insertarEnArbol(e3);
+	t->insertarEnArbol(e4);
+	t->insertarEnArbol(e5);
+	t->mostrarTitulacionMat();
+	//Se muestran por pantalla los cinco estudiantes
+
+}
+
+void pr_obtenerNotaCorte(){
+	titulacion *t = new titulacion("02", "ejemplo", 3);
+	Estudiante *e1 = new Estudiante("ape1", "ape2", "nombre", "76044", 5);
+	Estudiante *e2 = new Estudiante("ape1Ej", "ape2Ej", "nombreEj", "76045", 3);
+	Estudiante *e3 = new Estudiante("ape1Ej2", "ape2Ej2", "nombreEj2", "76046", 7);
+	Estudiante *e4 = new Estudiante("ape1Ej3", "ape2E3", "nombreE3", "76047", 9);
+	Estudiante *e5 = new Estudiante("ape1Ej4", "ape2Ej4", "nombreEj4", "76048", 2);
+	t->insertarEstudianteAdmitido(e1);
+	t->insertarEstudianteAdmitido(e4);
+	t->insertarEstudianteAdmitido(e3);
+	t->insertarEstudianteEnEspera(e2);
+	t->insertarEstudianteEnEspera(e5);
+	if(t->obtenerNotaCorte() != 5){
+		cout<<"Error en pruebas de obtenerNotaCorte, titulacion"<<endl;
+	}
+
+}
+
+void pr_buscarSimilares(){
+	titulacion *t = new titulacion("02", "ejemplo", 3);
+	Estudiante *e1 = new Estudiante("ape1", "ape2", "nombre", "76044", 5);
+	Estudiante *e2 = new Estudiante("ap1Ej", "ape2Ej", "nombreEj", "76045", 3);
+	Estudiante *e3 = new Estudiante("ap1Ej2", "ape2Ej2", "nombreEj2", "76046", 7);
+	Estudiante *e4 = new Estudiante("ape1Ej3", "ape2E3", "nombreE3", "76047", 9);
+	Estudiante *e5 = new Estudiante("ape1Ej4", "ape2Ej4", "nombreEj4", "76048", 2);
+	t->insertarEnArbol(e1);
+	t->insertarEnArbol(e2);
+	t->insertarEnArbol(e3);
+	t->insertarEnArbol(e4);
+	t->insertarEnArbol(e5);
+	t->buscarSimilares("ape");
+	//Deben mostrarse por pantalla los estudiantes e1, e4 y e5
+}
+
+void pr_listaEsperaVacia(){
+	titulacion *t = new titulacion("02", "ejemplo", 3);
+	Estudiante *e1 = new Estudiante("ape1", "ape2", "nombre", "76044", 5);
+	Estudiante *e2 = new Estudiante("ap1Ej", "ape2Ej", "nombreEj", "76045", 3);
+	if(!t->listaEsperaVacia()){
+		cout<<"Error en pruebas de listaEsperaVacia, titulacion"<<endl;
+	}
+	t->insertarEstudianteEnEspera(e1);
+	t->insertarEstudianteEnEspera(e2);
+	if(t->listaEsperaVacia()){
+		cout<<"Error en pruebas de listaEsperaVacia, titulacion"<<endl;
+	}
+}
+
 /*
 int main(){
 	//pr_getID();
@@ -142,7 +268,15 @@ int main(){
 	//pr_obtenerAdmitidoMenorNota();
 	//pr_borrarEstudianteMenorNota();
 	//pr_buscarEstudiante();
+	//pr_buscarMat();
+	//pr_borrarEstudianteMatt();
+	//pr_obtenerEnEsperaMayorNota();
+	//pr_mostrarTitulacionMat();
+	//pr_obtenerNotaCorte();
+	//pr_buscarSimilares();
+	//pr_listaEsperaVacia();
 
 	return 0;
 }
 */
+

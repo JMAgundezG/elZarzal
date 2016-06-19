@@ -113,6 +113,62 @@ void pr_obtenerEstudianteMayorNota(){
 	}
 }
 
+void pr_cargaDeArboles(){
+	Estudiante *e1 = new Estudiante("a", "ape2", "nombre", "73044", 4);
+	Estudiante *e2 = new Estudiante("c", "ape2", "nombre", "76074", 7);
+	Estudiante *e3 = new Estudiante("b", "ape2", "nombre", "76244", 2);
+	conjuntoEstudiantes *CEprueba = new conjuntoEstudiantes();
+	CEprueba->insertarOrdenNota(e1);
+	CEprueba->insertarOrdenNota(e2);
+	CEprueba->insertarOrdenNota(e3);
+	CEprueba->cargaDeArboles();
+	CEprueba->mostrarEstudiantesMat();
+	//Deben mostrarse por pantalla los tres estudiantes, pues se está mostrando el arbol
+}
+
+void pr_borrarEstudianteMat(){
+	Estudiante *e1 = new Estudiante("a", "ape2", "nombre", "73044", 4);
+	Estudiante *e2 = new Estudiante("c", "ape2", "nombre", "76074", 7);
+	Estudiante *e3 = new Estudiante("b", "ape2", "nombre", "76244", 2);
+	conjuntoEstudiantes *CEprueba = new conjuntoEstudiantes();
+	CEprueba->insertarOrdenNota(e1);
+	CEprueba->insertarOrdenNota(e2);
+	CEprueba->insertarOrdenNota(e3);
+	CEprueba->cargaDeArboles();
+	cout<<"Alumnos iniciales:"<<endl;
+	CEprueba->mostrarEstudiantesMat();
+	CEprueba->borrarEstudianteMat(e1);
+	cout<<"Alumnos tras borrado:"<<endl;
+	CEprueba->mostrarEstudiantesMat();
+	//Deben aparecer por pantalla los estudiantes 2 y 3
+
+}
+
+void pr_insertarEnArbol(){
+	Estudiante *e1 = new Estudiante("a", "ape2", "nombre", "73044", 4);
+	Estudiante *e2 = new Estudiante("c", "ape2", "nombre", "76074", 7);
+	Estudiante *e3 = new Estudiante("b", "ape2", "nombre", "76244", 2);
+	conjuntoEstudiantes *CEprueba = new conjuntoEstudiantes();
+	CEprueba->insertarEnArbol(e1);
+	CEprueba->insertarEnArbol(e3);
+	CEprueba->insertarEnArbol(e2);
+	CEprueba->mostrarEstudiantesMat();
+	//Deben aparecer por pantalla los 3 alumnos, que se han incluido en el CE utilizando el módulo que se prueba
+}
+
+void pr_mostrarSimilares(){
+	Estudiante *e1 = new Estudiante("VARGUES", "VALIENTE", "ALBERTO", "73044", 4);
+	Estudiante *e2 = new Estudiante("RODRIGUEZ", "RAMOS", "CÁNDIDO", "76074", 7);
+	Estudiante *e3 = new Estudiante("VAQUERO", "VALBUENA", "JAVIER", "76244", 2);
+	conjuntoEstudiantes *CEprueba = new conjuntoEstudiantes();
+	CEprueba->insertarEnArbol(e1);
+	CEprueba->insertarEnArbol(e3);
+	CEprueba->insertarEnArbol(e2);
+	CEprueba->mostrarSimilares("VA");
+	//Debe mostrar dos estudiantes, excluyendo al e2
+
+}
+
 /*
 int main(){
 	//pr_insertarOrdenNota();
@@ -121,6 +177,10 @@ int main(){
 	//pr_borrarMenorNota();
 	//pr_obtenerEstudianteMenorNota();
 	//pr_obtenerEstudianteMayorNota();
+	//pr_cargaDeArboles();
+	//pr_borrarEstudianteMat();
+	//pr_insertarEnArbol();
+	//pr_mostrarSimilares();
 
 	return 0;
 }

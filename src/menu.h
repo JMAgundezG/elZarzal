@@ -37,14 +37,6 @@ private:
 		 */
 	void ejecutar ();
 
-	//===========================================================================
-		/*
-		 * Pre: Archivo "estudiantes.txt" y "titulaciones.txt"
-		 * Post: Carga las titulaciones en la lista de titulaciones y a los estudiantes
-		 * 		 en las preinscripciones
-		 * Complejidad:O(n²)
-		 */
-	void Leer_Alum_txt();
 
 	//===========================================================================
 		/*

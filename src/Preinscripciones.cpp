@@ -21,7 +21,7 @@ Preinscripciones::Preinscripciones() {
 }
 
 void Preinscripciones::reiniciarEstudiantes(){
-	estudiantes = new Pila<Estudiante*>;;
+	estudiantes = new Pila<Estudiante*>;
 }
 
 void Preinscripciones::cargarEstudiantes(string archivo){

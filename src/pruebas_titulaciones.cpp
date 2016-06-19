@@ -3,7 +3,7 @@
 #include "titulaciones.h"
 #include "titulacion.h"
 
-
+//Estas pruebas dependen del archivo "estudiantes.txt"
 void pr_buscarTitulacion(){
 	titulaciones *T = new titulaciones();
 	titulacion *t = new titulacion();
@@ -50,9 +50,18 @@ void pr_cargarTitulacionesDesdeArchivo(){
 
 }
 
+/* void pr_buscarMatt(){ // TODO
+	 titulaciones *T = new titulaciones();
+	 Estudiante *e = new Estudiante("VERDEJO", "VERDUGO", "AFRICA", "38354639Q", 8.336);
+	 T->buscarEstudiante("38354639Q");
+	 T->buscarMat(e,"REN", "01");
+	 cout<<"La estudiante ha renunciado, luego no debe mostrarse"<<endl;
+	 T->buscarEstudiante("38354639Q");
+ }
 
+*/
 
-//El módulo matricula sólo llama al módulo equivalente en cada una de las titulaciones, luego las pruebas se llevan
+//El módulo cargaDeArboles sólo llama al módulo equivalente en cada una de las titulaciones, luego las pruebas se llevan
 // a cabo en pruebas_conjuntoEstudiantes.cpp
 
 
@@ -60,8 +69,9 @@ void pr_cargarTitulacionesDesdeArchivo(){
 int main(){
 	//pr_cargarTitulacionesDesdeArchivo();
 	//pr_buscarTitulacion();
+	pr_buscarMatt();
 
 	return 0;
 }
-
 */
+

@@ -72,6 +72,7 @@ void elZarzal::cargaDeArboles(){ // TODO CAMBIADO
 
 void elZarzal::procesoMatricula(){
 	ifstream fsal;
+	titulacion *t;
 	string operacion, id, ape1, ape2, nombre, DNI;
 	fsal.open("matyrenuncias.txt");
 	while(!fsal.eof()){
@@ -83,9 +84,28 @@ void elZarzal::procesoMatricula(){
 			getline(fsal,nombre,'#');
 			getline(fsal,DNI);
 
-			Estudiante *e = new  Estudiante(ape1,ape2,nombre,DNI,0);
-			Titulaciones->buscarMat(e, operacion, id);
+			Estudiante *e;
+			Titulaciones->buscarTitulacion(id,t);
 
+			if(t->buscarEstudianteEnArboles(e,ape1,ape2,nombre)){
+				if(operacion == "MAT"){
+					string nombre;
+					nombre = t->getID() + ".txt";
+					ofstream salida(nombre.c_str(), ios::out | ios::app);
+					salida<<e->getApe1()<<" "<<e->getApe2()<<" "<<e->getNombre()<<" "<<e->getDNI()<<" "<<e->getNota()<<endl;
+					salida.close();
+					t->borrarEstudianteMat(e, t->getID());
+				}
+				else{
+					t->borrarEstudianteMat(e,t->getID());
+					if(!t->listaEsperaVacia()){
+						t->obtenerEnEsperaMayorNota(e);
+						t->insertarEstudianteAdmitido(e);
+						t->insertarEnArbol(e);
+					}
+				}
+
+			}
 		}
 	}
 	fsal.close();
@@ -103,6 +123,10 @@ void elZarzal::mostrarNotasDeCorte(){
 
 void elZarzal::mostrarEstudiantesSimilares(string raiz){
 	Titulaciones->mostrarSimilares(raiz);
+}
+
+void elZarzal::mostrarInfoTitulaciones(){
+	Titulaciones->mostrarTitulaciones();
 }
 elZarzal::~elZarzal() {
 	delete preinscripciones;

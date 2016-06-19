@@ -125,7 +125,7 @@ public:
 	 * Complejidad: O(1)
 	 * Parámetros: dni (string), *&e (Estudiante);
 	 */
-	void buscarEstudiante(string dni, Estudiante * &e);
+	bool buscarEstudiante(string dni, Estudiante * &e);
 
 	//===============================================================================
 	/*
@@ -221,6 +221,24 @@ public:
 
 	void buscarSimilares(string raiz);
 	//===============================================================================
+	/*
+	 * Pre: {}
+	 * Post: Muestra por pantalla los datos de la titulación
+	 * Complejidad: O(1)
+	 * Parámetros:
+	 */
+	void mostrarInfo();
+
+	//===============================================================================
+	/*
+	 * Pre: Estudiantes cargados en el árbol
+	 * Post: Devuelve el estudiante que tenga los datos ingresados por parámetro e indica si está o no
+	 * Complejidad: O(1)
+	 * Parámetros:string apellido1, string apellido2, string nombre, Estudiante *&e
+	 */
+
+	bool buscarEstudianteEnArboles(Estudiante *&e, string apellido1, string apellido2, string nombre);
+
 	~titulacion ();
 
 };

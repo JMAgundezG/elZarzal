@@ -17,6 +17,17 @@ titulaciones::titulaciones() {
 	cargarTitulacionesDesdeArchivo();
 }
 
+void titulaciones::mostrarTitulaciones(){
+	titulacion *t;
+	Titulaciones->moverInicio();
+	while(!Titulaciones->finLista()){
+		Titulaciones->consultar(t);
+		t->mostrarInfo();
+		Titulaciones->avanzar();
+	}
+
+
+}
 
 void titulaciones::cargarTitulacionesDesdeArchivo(){
 
@@ -34,49 +45,17 @@ void titulaciones::cargarTitulacionesDesdeArchivo(){
 
 			numEstudiantesDef = atoi(numEstudiantes.c_str());
 
-			titulacion *t = new titulacion(id,nombre,numEstudiantesDef); // TODO ID es un string, cambiado por idDef
+			titulacion *t = new titulacion(id,nombre,numEstudiantesDef); //
 
 			Titulaciones->insertar(t);
+			Titulaciones->avanzar();
 			}
 	}
 	fsal.close();
 
 }
 
-void titulaciones::buscarMat(Estudiante *e, string op, string id){
-	titulacion *t;
-	ofstream salida;
-	bool enc = false;
-	Titulaciones->moverInicio();
-	while(!Titulaciones->finLista() && enc == false){
-		Titulaciones->consultar(t);
-		if(t->getID()==id){
-			enc = true;
-			if(t->buscarMat(e)){
-				if(op == "MAT"){
-					string nombre;
-					nombre = t->getID() + ".txt";
-					ofstream salida(nombre.c_str(), ios::out | ios::app);
-					salida<<e->getApe1()<<" "<<e->getApe2()<<" "<<e->getNombre()<<" "<<e->getDNI()<<endl;
-					salida.close();
-					borrarEstudianteMat(e, t->getID());
-				}
-				else{
-					borrarEstudianteMat(e,t->getID());
-					if(!t->listaEsperaVacia()){
-						t->obtenerEnEsperaMayorNota(e);
-						t->insertarEstudianteAdmitido(e);
-						t->insertarEnArbol(e);
-					}
-				}
 
-			}
-		}
-
-		Titulaciones->avanzar();
-	}
-
-}
 
 void titulaciones::borrarEstudianteMat(Estudiante *e, string id){
 	titulacion *t;
@@ -97,16 +76,26 @@ void titulaciones::buscarEstudiante(string dni){
 	cout <<"Lista de titulaciones:"<<endl<<endl;
 	titulacion *t;
 	Estudiante *e;
+	bool encontrado;
+	int contador = 0;
 	Titulaciones->moverInicio();
 	while(!Titulaciones->finLista()){
 		Titulaciones->consultar(t);
-		t->buscarEstudiante(dni,e);
+		encontrado = t->buscarEstudiante(dni,e);
 		Titulaciones->avanzar();
+		if (encontrado){
+			contador++;
+		}
 	}
-	cout <<"--------------------------"<< endl;
-	cout <<"Información personal:"<<endl<<endl;
-	cout<<"Nombre: "<<e->getNombre()<<" "<<e->getApe1()<<" "<<e->getApe2()<<endl;
-	cout<<"Nota: "<<e->getNota()<<endl;
+	if(contador == 0){
+			cout<<"ALUMNO NO ENCONTRADO"<<endl;
+		}
+	else{
+		cout <<"--------------------------"<< endl;
+		cout <<"Información personal:"<<endl<<endl;
+		cout<<"Nombre: "<<e->getNombre()<<" "<<e->getApe1()<<" "<<e->getApe2()<<endl;
+		cout<<"Nota: "<<e->getNota()<<endl;
+	}
 
 }
 
@@ -127,7 +116,7 @@ bool titulaciones::buscarTitulacion(string id, titulacion * &t){
 	return enc;
 }
 
-void titulaciones::cargaDeArboles(){ //TODO CAMBIADO
+void titulaciones::cargaDeArboles(){
 	Titulaciones->moverInicio();
 	titulacion *t;
 	while(!Titulaciones->finLista()){

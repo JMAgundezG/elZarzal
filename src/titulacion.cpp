@@ -52,14 +52,18 @@ void titulacion::insertarEstudianteEnEspera(Estudiante *e){
 
 }
 
-void titulacion::buscarEstudiante(string dni, Estudiante * &e){
+bool titulacion::buscarEstudiante(string dni, Estudiante * &e){
+	bool encontrado = false;
 	if (admitidos->buscar(dni,e)){
 		cout<<nombreTitulacion<<" - Admitido"<<endl;
+		encontrado = true;
 	}
 	else if(enEspera->buscar(dni,e)){
 		cout<<nombreTitulacion<<" - En lista de espera"<<endl;
+		encontrado = true;
 	}
 
+	return encontrado;
 }
 
 void titulacion::borrarEstudianteMenorNota(){
@@ -87,7 +91,7 @@ void titulacion::obtenerAdmitidoMenorNota(Estudiante *&e){
 	admitidos->obtenerEstudianteMenorNota(e);
 }
 
-void titulacion::cargaDeArboles(){ //TODO CAMBIADO
+void titulacion::cargaDeArboles(){
 	admitidos->cargaDeArboles();
 	enEspera->cargaDeArboles();
 
@@ -100,7 +104,7 @@ bool titulacion::buscarMat(Estudiante *e){
 }
 
 
-void titulacion::borrarEstudianteMat(Estudiante *e, string id){ //TODO Revisar
+void titulacion::borrarEstudianteMat(Estudiante *e, string id){
 	if (identificador == id){
 		admitidos->borrarEstudianteMat(e);
 	}
@@ -113,7 +117,7 @@ void titulacion::obtenerEnEsperaMayorNota(Estudiante *&e){
 	enEspera->borrar(e->getDNI());
 }
 
-void titulacion::insertarEnArbol(Estudiante *&e){ // TODO Revisar
+void titulacion::insertarEnArbol(Estudiante *&e){
 	admitidos->insertarEnArbol(e);
 
 }
@@ -137,6 +141,18 @@ void titulacion::buscarSimilares(string raiz){
 
 bool titulacion::listaEsperaVacia(){
 	return enEspera->vacio();
+}
+
+void titulacion::mostrarInfo(){
+
+	cout<<this->identificador<<" "<<this->nombreTitulacion<<" "<<endl;
+}
+
+bool titulacion::buscarEstudianteEnArboles(Estudiante *&e, string apellido1, string apellido2, string nombre){
+
+	bool encontrado;
+	encontrado = admitidos->buscarEstudianteEnArbol(e,apellido1,apellido2,nombre);
+	return encontrado;
 }
 
 titulacion::~titulacion () {

@@ -19,7 +19,7 @@ class elZarzal {
 private:
 
 	Preinscripciones *preinscripciones; //Las preinscripciones de todos los estudiantes que han pedido alguna
-										//entrar en alguna titulación de esta universidad
+	//entrar en alguna titulación de esta universidad
 
 	titulaciones *Titulaciones;			//El conjunto de titulaciones existentes en El Zarzal
 
@@ -54,7 +54,7 @@ public:
 	 *Pre: Estudiantes cargados
 	 *Post:Pasa los estudiantes de listas a árboles
 	 *Complejidad:O(1)
-	*/
+	 */
 	void cargaDeArboles();
 	/*
 	 *Pre: Alumnos en árboles
@@ -93,6 +93,17 @@ public:
 	 *Parámetros: raiz (string)
 	 */
 	void mostrarEstudiantesSimilares(string raiz);
+
+
+
+	/*
+	 *Pre: Titulaciones cargadas
+	 *Post:Muestra los datos de todas las titulaciones
+	 *Complejidad:O(1)
+	 *Parámetros:
+	 */
+	void mostrarInfoTitulaciones();
+
 	/*
 	 * Destructor;
 	 */

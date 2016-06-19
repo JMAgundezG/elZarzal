@@ -49,7 +49,7 @@ public:
 	 */
 	void buscarEstudiante(string dni);
 	//===========================================================================
-	/*TODO REVISAR / CAMBIADO
+	/*
 	 * Pre: Listas de las titulaciones cargadas con los alumnos
 	 * Post:Comienza el proceso de matriculación en todas las titulaciones
 	 * Complejidad:O(n)
@@ -96,6 +96,18 @@ public:
 	 * Parámetros:raiz (string)
 	 */
 	void mostrarSimilares(string raiz);
+
+	//===========================================================================
+	/*
+	 * Pre: Titulaciones creadas
+	 * Post:Muestra por pantalla toda la información de todas las titulaciones de la lista
+	 * Complejidad:O(n)
+	 * Parámetros:
+	 */
+
+	void mostrarTitulaciones();
+
+
 
 	~titulaciones();
 };
